@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-5">Welcome, {{ user.first_name }}!</h1>
+  <a href="/create/guest" class="btn btn-primary mb-3">Add Guest</a>
+  <table class="table table-hover table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Posted by</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for guest in guests %}
+      <tr>
+        <td>{{ guest.name }}</td>
+        <td>
+          {% if guest.under30 %}
+          Yes
+          {% else %}
+          No
+          {% endif %}
+        </td>
+        <td>{{ guest.added_by.first_name }}</td>
+        <td>
+          <a href="/guests/{{ guest.id }}" class="btn btn-sm btn-outline-primary" target="_blank">View</a>
+          {% if user.id == guest.user_id %}
+          <a href="/edit/guest/{{guest.id}}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          <form action="/delete/guest/", method="POST">
+            <input type="hidden" name="id" value="{{ guest.id }}">
+            <input type="submit" class="btn btn-sm btn-outline-danger" value="Delete">
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

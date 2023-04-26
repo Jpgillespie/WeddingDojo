@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if guest %}
+Edit Guest
+{% else %}
+Create Guest
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  <h1>{% if guest  %}
+    Edit Guest
+    {% else %}
+    Create guest
+    {% endif %}</h1>
+  <form method="POST" action="{% if guest %}/edit/guest/{{guest.id}}{% else %}/create/guest{% endif %}">
+    {% if guest %}
+    <input type="hidden" name="id" value="{{guest.id}}">
+    {% endif %} 
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" value="{% if guest %}{{guest.name}}{% endif %}" required>
+    </div>
+    <div class="form-group">
+      <label for="food_selection">Food Selection</label>
+      <textarea class="form-control" id="food_selection" name="food_selection" required>{% if guest %}{{guest.food_selection}}{% endif %}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="favorite_memory">Favorite Memory</label>
+      <textarea class="form-control" id="favorite_memory" name="favorite_memory" required>{% if guest %}{{guest.favorite_memory}}{% endif %}</textarea>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}View Guest{% endblock %}
+
+{% block content %}
+  <h1>{{ guest.name }}</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <p><strong>Description:</strong> {{ guest.food_selection }}</p>
+      <p><strong>Instructions:</strong> {{ guest.favorite_memory }}</p>
+      <p><strong>Added By:</strong> {{ guest.added_by.first_name }} {{ guest.added_by.last_name }}</p>
+    </div>
+  </div>
+{% endblock %}
