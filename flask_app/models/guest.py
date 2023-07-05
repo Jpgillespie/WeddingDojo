@@ -22,7 +22,7 @@ class Guest:
     
 
     @classmethod
-    def get_GUESTS(cls):
+    def get_guests(cls):
         query = "SELECT * from GUESTS JOIN users on guests.user_id = users.id"
         results = ConnectToMySQL('guests_schema').query_db(query, {})
         GUESTS = []
@@ -39,7 +39,7 @@ class Guest:
             u = user.User(user_data)
             guest = Guest(row)
             guest.added_by = u
-            guest.append(guest)
+            Guest.append(guest)
         return guest
     
     
@@ -85,7 +85,7 @@ class Guest:
         data['under30'] = 1 if data['under30'] == 'yes' else 0
         query = """
         UPDATE guests SET name=%(name)s, food_selection=%(food_selection)s, 
-        favorite_memory=%(favorite_memory)s, updated_at=NOW(), date_made=%(date_made)s WHERE id = %(id)s;
+        favorite_memory=%(favorite_memory)s, updated_at=NOW(), WHERE id = %(id)s;
         """
         return ConnectToMySQL ('guests_schema').query_db(query, data)
     
@@ -104,11 +104,6 @@ class Guest:
             is_valid = False
         if len(form_data ['food_selection']) < 3:
             flash ("food_selection must be 3 characters or more")
-            is_valid = False
-        try:
-            date_made = datetime.strptime(form_data['date_made'], '%Y-%m-%d').date()
-        except ValueError:
-            flash("please enter a valid date")
             is_valid = False
         if len(form_data['favorite_memory']) < 3:
             flash ("favorite_memory must be 3 characters or more")
